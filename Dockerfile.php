@@ -4,12 +4,14 @@ RUN docker-php-ext-install pdo pdo_mysql
 
 WORKDIR /var/www/html
 
-# Копируем публичные файлы (включая index.php) прямо в корень DocumentRoot,
-# чтобы Apache видел их как основной сайт и не отдавал 403 Forbidden.
-COPY public/ /var/www/html/
+# Докер-образ содержит базовую структуру, но в режиме разработки
+# основной код будет подмонтирован томами из docker-compose.
+COPY public ./public
+COPY app ./app
 
-# Приложение (MVC-логика) лежит в подкаталоге app
-COPY app /var/www/html/app
+# Меняем DocumentRoot Apache на public, чтобы index.php и статика
+# брались из /var/www/html/public.
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
 RUN a2enmod rewrite
 

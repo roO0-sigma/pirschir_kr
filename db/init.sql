@@ -34,7 +34,7 @@ INSERT INTO categories (name, image_path) VALUES
     ('Технологии', NULL),
     ('Наука', NULL),
     ('Путешествия', NULL),
-    ('Искусство', NULL),
+    ('Искуство', NULL),
     ('Образование', NULL),
     ('Рыбалка', NULL)
 ON DUPLICATE KEY UPDATE
