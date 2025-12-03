@@ -31,12 +31,12 @@ CREATE TABLE IF NOT EXISTS blogs (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO categories (name, image_path) VALUES
-    ('Технологии', NULL),
-    ('Наука', NULL),
-    ('Путешествия', NULL),
-    ('Искуство', NULL),
-    ('Образование', NULL),
-    ('Рыбалка', NULL)
+    ('Технологии', "/images/categories/tech.jpg"),
+    ('Наука', "/images/categories/sience.jpg"),
+    ('Путешествия', "/images/categories/adventure.jpg"),
+    ('Искусство', "/images/categories/create.jpg"),
+    ('Образование', "/images/categories/graduation.jpg"),
+    ('Рыбалка', "/images/categories/fisherman.jpg")
 ON DUPLICATE KEY UPDATE
     name = VALUES(name),
     image_path = VALUES(image_path);

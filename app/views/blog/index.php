@@ -19,7 +19,8 @@
     <?php foreach ($categories as $category): ?>
         <?php
         $imagePath = $category['image_path'] ?? null;
-        $bgUrl = $imagePath ? ' style="background-image: url(' . htmlspecialchars($imagePath, ENT_QUOTES) . ');"' : '';
+        $safePath = $imagePath ? htmlspecialchars($imagePath, ENT_QUOTES) : null;
+        $bgUrl = $safePath ? ' style="background-image: url(\'' . $safePath . '\');"' : '';
         ?>
         <a href="/?controller=blog&action=index&category=<?= (int)$category['id'] ?>"
            class="category-card <?= isset($categoryId) && $categoryId == $category['id'] ? 'active' : '' ?>">
