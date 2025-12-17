@@ -8,6 +8,7 @@ use App\Core\Auth;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Subscription;
 
 class BlogController extends Controller
 {
@@ -180,10 +181,69 @@ class BlogController extends Controller
         $blogModel = new Blog();
         $blogs = $blogModel->byAuthor($userId);
 
+        $isSubscribed = false;
+        if (Auth::check()) {
+            $subscriptionModel = new Subscription();
+            $currentUserId = Auth::user()['id'];
+            $isSubscribed = $subscriptionModel->isSubscribed($currentUserId, $userId);
+        }
+
         $this->render('blog/author', [
             'author' => $user,
             'blogs' => $blogs,
+            'isSubscribed' => $isSubscribed,
         ]);
+    }
+
+    public function subscribe(): void
+    {
+        if (!Auth::check()) {
+            $this->redirect('/?controller=auth&action=login');
+            return;
+        }
+
+        $authorId = isset($_GET['user_id']) ? (int)$_GET['user_id'] : 0;
+        
+        if (!$authorId) {
+            http_response_code(404);
+            echo 'Автор не найден';
+            return;
+        }
+
+        $currentUserId = Auth::user()['id'];
+
+        // Нельзя подписаться на самого себя
+        if ($currentUserId === $authorId) {
+            $this->redirect('/?controller=blog&action=author&user_id=' . $authorId);
+            return;
+        }
+
+        $subscriptionModel = new Subscription();
+        $subscriptionModel->subscribe($currentUserId, $authorId);
+
+        $this->redirect('/?controller=blog&action=author&user_id=' . $authorId);
+    }
+
+    public function unsubscribe(): void
+    {
+        if (!Auth::check()) {
+            $this->redirect('/?controller=auth&action=login');
+            return;
+        }
+
+        $authorId = isset($_GET['user_id']) ? (int)$_GET['user_id'] : 0;
+        
+        if (!$authorId) {
+            http_response_code(404);
+            echo 'Автор не найден';
+            return;
+        }
+
+        $currentUserId = Auth::user()['id'];
+        $subscriptionModel = new Subscription();
+        $subscriptionModel->unsubscribe($currentUserId, $authorId);
+
+        $this->redirect('/?controller=blog&action=author&user_id=' . $authorId);
     }
 }
 

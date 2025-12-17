@@ -30,6 +30,17 @@ CREATE TABLE IF NOT EXISTS blogs (
     CONSTRAINT fk_blogs_category FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS subscriptions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    subscriber_id INT NOT NULL,
+    author_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_subscriptions_subscriber FOREIGN KEY (subscriber_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_subscriptions_author FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_subscription (subscriber_id, author_id),
+    CHECK (subscriber_id != author_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 INSERT INTO categories (name, image_path) VALUES
     ('Технологии', "/images/categories/tech.jpg"),
     ('Наука', "/images/categories/sience.jpg"),

@@ -14,7 +14,7 @@ use App\Core\Auth;
         <a href="/?controller=blog&action=index" class="logo">Блоги</a>
         <nav class="nav">
             <?php if (Auth::check()): ?>
-                <span class="nav-user">Привет, <?= htmlspecialchars(Auth::user()['name']) ?></span>
+                <a href="/?controller=blog&action=author&user_id=<?= (int)Auth::user()['id'] ?>" class="nav-user">Привет, <?= htmlspecialchars(Auth::user()['name']) ?></a>
                 <a href="/?controller=blog&action=create" class="btn">Новый пост</a>
                 <a href="/?controller=auth&action=logout" class="link">Выйти</a>
             <?php else: ?>

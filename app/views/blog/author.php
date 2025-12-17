@@ -1,6 +1,15 @@
 <section class="page-header">
     <h1>Публикации автора: <?= htmlspecialchars($author['name']) ?></h1>
     <p class="muted">Все публикации пользователя</p>
+    <?php
+    use App\Core\Auth;
+    if (Auth::check() && Auth::user()['id'] != $author['id']): ?>
+        <?php if ($isSubscribed): ?>
+            <a href="/?controller=blog&action=unsubscribe&user_id=<?= (int)$author['id'] ?>" class="btn btn-danger">Отписаться</a>
+        <?php else: ?>
+            <a href="/?controller=blog&action=subscribe&user_id=<?= (int)$author['id'] ?>" class="btn">Подписаться</a>
+        <?php endif; ?>
+    <?php endif; ?>
 </section>
 
 <?php if (empty($blogs)): ?>

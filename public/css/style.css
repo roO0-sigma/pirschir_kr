@@ -41,10 +41,6 @@ body {
     gap: 12px;
 }
 
-.nav-user {
-    font-size: 14px;
-    opacity: 0.9;
-}
 
 .btn,
 .btn-outline,
@@ -303,6 +299,19 @@ label {
     bottom: 0;
     left: 0;
     right: 0; */
+}
+
+
+.nav-user {
+    text-decoration: none;
+    color: inherit;
+    cursor: default;
+}
+
+.nav-user:hover {
+    opacity: 1;
+    color: #fff;
+    text-decoration: none;
 }
 
 
