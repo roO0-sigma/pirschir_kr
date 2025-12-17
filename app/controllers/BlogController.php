@@ -245,6 +245,26 @@ class BlogController extends Controller
 
         $this->redirect('/?controller=blog&action=author&user_id=' . $authorId);
     }
+
+    public function subscriptions(): void
+    {
+        if (!Auth::check()) {
+            $this->redirect('/?controller=auth&action=login');
+            return;
+        }
+
+        $currentUserId = Auth::user()['id'];
+        $blogModel = new Blog();
+        $blogs = $blogModel->bySubscriptions($currentUserId);
+
+        $subscriptionModel = new Subscription();
+        $subscribedAuthors = $subscriptionModel->getSubscriptions($currentUserId);
+
+        $this->render('blog/subscriptions', [
+            'blogs' => $blogs,
+            'subscribedAuthors' => $subscribedAuthors,
+        ]);
+    }
 }
 
 

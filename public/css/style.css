@@ -79,6 +79,11 @@ body {
 .btn-danger {
     background: #dc2626;
     color: #fff;
+    margin-bottom: 12px;
+}
+
+.btn-cool {
+    margin-bottom: 12px;
 }
 
 .btn-danger:hover {

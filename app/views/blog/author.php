@@ -7,7 +7,7 @@
         <?php if ($isSubscribed): ?>
             <a href="/?controller=blog&action=unsubscribe&user_id=<?= (int)$author['id'] ?>" class="btn btn-danger">Отписаться</a>
         <?php else: ?>
-            <a href="/?controller=blog&action=subscribe&user_id=<?= (int)$author['id'] ?>" class="btn">Подписаться</a>
+            <a href="/?controller=blog&action=subscribe&user_id=<?= (int)$author['id'] ?>" class="btn btn-cool">Подписаться</a>
         <?php endif; ?>
     <?php endif; ?>
 </section>

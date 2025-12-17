@@ -11,7 +11,12 @@ use App\Core\Auth;
 <body>
 <header class="topbar">
     <div class="container topbar-inner">
-        <a href="/?controller=blog&action=index" class="logo">Блоги</a>
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <a href="/?controller=blog&action=index" class="logo">Блоги</a>
+            <?php if (Auth::check()): ?>
+                <a href="/?controller=blog&action=subscriptions" class="link" style="color: #fff; opacity: 0.9;">Подписки</a>
+            <?php endif; ?>
+        </div>
         <nav class="nav">
             <?php if (Auth::check()): ?>
                 <a href="/?controller=blog&action=author&user_id=<?= (int)Auth::user()['id'] ?>" class="nav-user">Привет, <?= htmlspecialchars(Auth::user()['name']) ?></a>

@@ -112,6 +112,21 @@ class Blog
         $stmt->execute([':user_id' => $userId]);
         return $stmt->fetchAll();
     }
+
+    public function bySubscriptions(int $userId): array
+    {
+        $stmt = $this->db->prepare(
+            'SELECT b.*, c.name AS category_name, u.name AS author_name, u.id AS author_id
+             FROM blogs b
+             JOIN categories c ON b.category_id = c.id
+             JOIN users u ON b.user_id = u.id
+             JOIN subscriptions s ON b.user_id = s.author_id
+             WHERE s.subscriber_id = :user_id
+             ORDER BY b.created_at DESC'
+        );
+        $stmt->execute([':user_id' => $userId]);
+        return $stmt->fetchAll();
+    }
 }
 
 
