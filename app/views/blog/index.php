@@ -45,7 +45,7 @@
                 </h2>
                 <p class="blog-meta">
                     Тема: <span><?= htmlspecialchars($blog['category_name']) ?></span> ·
-                    Автор: <span><?= htmlspecialchars($blog['author_name']) ?></span> ·
+                    Автор: <a href="/?controller=blog&action=author&user_id=<?= (int)$blog['user_id'] ?>" class="author-link"><?= htmlspecialchars($blog['author_name']) ?></a> ·
                     <span><?= htmlspecialchars($blog['created_at']) ?></span>
                 </p>
                 <p class="blog-excerpt">

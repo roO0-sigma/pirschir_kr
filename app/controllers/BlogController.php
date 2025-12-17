@@ -7,6 +7,7 @@ use App\Core\Controller;
 use App\Core\Auth;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\User;
 
 class BlogController extends Controller
 {
@@ -155,6 +156,34 @@ class BlogController extends Controller
         }
 
         $this->render('blog/delete', ['blog' => $blog]);
+    }
+
+    public function author(): void
+    {
+        $userId = isset($_GET['user_id']) ? (int)$_GET['user_id'] : 0;
+        
+        if (!$userId) {
+            http_response_code(404);
+            echo 'Автор не найден';
+            return;
+        }
+
+        $userModel = new User();
+        $user = $userModel->findById($userId);
+
+        if (!$user) {
+            http_response_code(404);
+            echo 'Автор не найден';
+            return;
+        }
+
+        $blogModel = new Blog();
+        $blogs = $blogModel->byAuthor($userId);
+
+        $this->render('blog/author', [
+            'author' => $user,
+            'blogs' => $blogs,
+        ]);
     }
 }
 

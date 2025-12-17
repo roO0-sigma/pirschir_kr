@@ -1,5 +1,5 @@
 <section class="form-card">
-    <h1>Новый блог</h1>
+    <h1>Новый пост</h1>
 
     <?php if (!empty($error)): ?>
         <div class="alert alert-error"><?= htmlspecialchars($error) ?></div>

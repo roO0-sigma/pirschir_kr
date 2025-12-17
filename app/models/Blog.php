@@ -98,6 +98,20 @@ class Blog
         $row = $stmt->fetch();
         return $row && (int)$row['cnt'] > 0;
     }
+
+    public function byAuthor(int $userId): array
+    {
+        $stmt = $this->db->prepare(
+            'SELECT b.*, c.name AS category_name, u.name AS author_name 
+             FROM blogs b
+             JOIN categories c ON b.category_id = c.id
+             JOIN users u ON b.user_id = u.id
+             WHERE b.user_id = :user_id
+             ORDER BY b.created_at DESC'
+        );
+        $stmt->execute([':user_id' => $userId]);
+        return $stmt->fetchAll();
+    }
 }
 
 
