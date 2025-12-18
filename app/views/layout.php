@@ -11,10 +11,10 @@ use App\Core\Auth;
 <body>
 <header class="topbar">
     <div class="container topbar-inner">
-        <div style="display: flex; align-items: center; gap: 16px;">
+        <div class="topbar-left">
             <a href="/?controller=blog&action=index" class="logo">Блоги</a>
             <?php if (Auth::check()): ?>
-                <a href="/?controller=blog&action=subscriptions" class="link" style="color: #fff; opacity: 0.9;">Подписки</a>
+                <a href="/?controller=blog&action=subscriptions" class="link link-subscriptions">Подписки</a>
             <?php endif; ?>
         </div>
         <nav class="nav">
